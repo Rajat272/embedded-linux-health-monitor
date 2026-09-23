@@ -1,0 +1,38 @@
+[Unit]
+Description=Embedded Linux Device Health Monitor & Auto-Recovery Agent
+Documentation=https://github.com/your-org/embedded-linux-health-monitor
+After=network.target syslog.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/device-health-monitor /etc/device-health-monitor/health_monitor.json
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=device-health-monitor
+
+# Run as root to allow service restarts and network recovery
+User=root
+Group=root
+
+# Systemd hardening options (compatible with monitoring needs)
+ProtectSystem=strict
+ReadWritePaths=/var/log
+ProtectHome=yes
+NoNewPrivileges=no
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+
+# Allow reading /proc and /sys
+ReadOnlyPaths=/proc /sys
+
+# Watchdog: systemd restarts service if it becomes unresponsive
+WatchdogSec=120
+
+[Install]
+WantedBy=multi-user.target

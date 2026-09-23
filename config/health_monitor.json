@@ -1,0 +1,12 @@
+{
+    "check_interval_seconds": 10,
+    "cpu_threshold": 90,
+    "memory_threshold": 90,
+    "disk_threshold": 90,
+    "temperature_threshold": 80,
+    "disk_path": "/",
+    "network_interface": "eth0",
+    "critical_service": "ssh",
+    "log_file": "/var/log/device-health-monitor.log",
+    "recovery_wait_seconds": 5
+}
